@@ -1,0 +1,51 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int* matchingStrings(int n, char** stringList, int q, char** queries, int* resultSize) {
+    int* results = (int*)malloc(q * sizeof(int));
+    for (int i = 0; i < q; i++) {
+        results[i] = 0;
+        for (int j = 0; j < n; j++) {
+            if (strcmp(queries[i], stringList[j]) == 0) {
+                results[i]++;
+            }
+        }
+    }
+    *resultSize = q;
+    return results;
+}
+
+int main() {
+    int n, q;
+    scanf("%d", &n);
+    char** stringList = (char**)malloc(n * sizeof(char*));
+    for (int i = 0; i < n; i++) {
+        stringList[i] = (char*)malloc(101 * sizeof(char));
+        scanf("%s", stringList[i]);
+    }
+    scanf("%d", &q);
+    char** queries = (char**)malloc(q * sizeof(char*));
+    for (int i = 0; i < q; i++) {
+        queries[i] = (char*)malloc(101 * sizeof(char));
+        scanf("%s", queries[i]);
+    }
+
+    int resultSize;
+    int* results = matchingStrings(n, stringList, q, queries, &resultSize);
+    for (int i = 0; i < resultSize; i++) {
+        printf("%d\n", results[i]);
+    }
+
+    for (int i = 0; i < n; i++) {
+        free(stringList[i]);
+    }
+    free(stringList);
+    for (int i = 0; i < q; i++) {
+        free(queries[i]);
+    }
+    free(queries);
+    free(results);
+    return 0;
+}
+
